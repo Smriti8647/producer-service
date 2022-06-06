@@ -8,28 +8,31 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.tweetapp.common.ApiResponse;
 import com.tweetapp.model.Comment;
+import com.tweetapp.model.Tag;
 import com.tweetapp.model.Tweet;
 
 public interface TweetUiService {
 
 	public ResponseEntity<ApiResponse> getAllTweet(final String token);
 
-	public ResponseEntity<ApiResponse> getUsers(@RequestHeader("Authorization") final String token);
-	
-	public ResponseEntity<ApiResponse> getUsers(@RequestHeader("Authorization") final String token, @PathVariable("username") String username);
-	
-	public ResponseEntity<ApiResponse> getTweets(@RequestHeader("Authorization") final String token, @PathVariable("username") String username);
-	
-    public ResponseEntity<ApiResponse> createNewTweet(@RequestHeader("Authorization") final String token, @RequestBody Tweet tweet);
-	
-	public ResponseEntity<ApiResponse> updateTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id, @RequestBody String updateTweet);
-	
-	public ResponseEntity<ApiResponse> deleteTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id);
-	
-	public ResponseEntity<ApiResponse> likeTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id);
-	
-	public ResponseEntity<ApiResponse> removeLikeTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id);
-	
-	public ResponseEntity<ApiResponse> replyTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id, @RequestBody Comment comment );
-		
+	public ResponseEntity<ApiResponse> getUsers(final String token);
+
+	public ResponseEntity<ApiResponse> getUsers(final String token, String username);
+
+	public ResponseEntity<ApiResponse> getTweets(final String token, String username);
+
+	public ResponseEntity<ApiResponse> createNewTweet(final String token, Tweet tweet);
+
+	public ResponseEntity<ApiResponse> updateTweet(final String token, String username, String id, String updateTweet);
+
+	public ResponseEntity<ApiResponse> deleteTweet(final String token, String username, String id);
+
+	public ResponseEntity<ApiResponse> likeTweet(final String token, String username, String id);
+
+	public ResponseEntity<ApiResponse> removeLikeTweet(final String token, String username, String id);
+
+	public ResponseEntity<ApiResponse> replyTweet(final String token, String username, String id, Comment comment);
+
+	public ResponseEntity<?> setTag(final String token, Tag tag);
+
 }

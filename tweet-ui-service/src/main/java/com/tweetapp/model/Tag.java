@@ -2,26 +2,35 @@ package com.tweetapp.model;
 
 import java.util.List;
 
-
 public class Tag {
 
-	private String loginId;
-	private List<String> tweetIdList;
+	private String tweetId;
+	private List<String> users;
 
-	public String getLoginId() {
-		return loginId;
+	public Tag() {
+		super();
 	}
 
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
+	public Tag(String tweetId, List<String> users) {
+		super();
+		this.tweetId = tweetId;
+		this.users = users;
 	}
 
-	public List<String> getTweetIdList() {
-		return tweetIdList;
+	public String getTweetId() {
+		return tweetId;
 	}
 
-	public void setTweetIdList(List<String> tweetIdList) {
-		this.tweetIdList = tweetIdList;
+	public void setTweetId(String tweetId) {
+		this.tweetId = tweetId;
+	}
+
+	public List<String> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<String> users) {
+		this.users = users;
 	}
 
 }

@@ -3,14 +3,17 @@ package com.tweetapp.service;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import com.tweetapp.client.AuthenticationServiceClient;
 import com.tweetapp.client.UpdateServiceClient;
 import com.tweetapp.common.ApiResponse;
 import com.tweetapp.model.Comment;
+import com.tweetapp.model.Tag;
 import com.tweetapp.model.Tweet;
 import com.tweetapp.model.ValidationResponse;
 
@@ -24,6 +27,12 @@ public class TweetUiServiceImpl implements TweetUiService {
 
 	@Autowired
 	AuthenticationServiceClient authenticationServiceClient;
+	
+	@Autowired
+	private KafkaTemplate<String, Tag> kafkaTemplate;
+	
+	@Value("kafka-topic")
+	private String TOPIC;
 
 	public ResponseEntity<ApiResponse> getAllTweet(final String token) {
 		try {
@@ -227,6 +236,21 @@ public class TweetUiServiceImpl implements TweetUiService {
 			validationResponse.setMessage("Exception occurred while invoking authentication Api");
 			validationResponse.setCode(HttpStatus.INTERNAL_SERVER_ERROR);
 			return validationResponse;
+		}
+	}
+
+	@Override
+	public ResponseEntity<ApiResponse> setTag(String token, Tag tag) {
+		try {
+			ValidationResponse validationResponse = jwtTokenValidation(token);
+			if (validationResponse.getIsSuccess()) {
+				kafkaTemplate.send("tweetTag", tag);
+				return new ResponseEntity<>(new ApiResponse(true, "tags sent"), HttpStatus.OK);
+			} else {
+				return createUnauthorizedResponse(validationResponse);
+			}
+		} catch (RuntimeException e) {
+			return createRuntimeExceptionResponse(e);
 		}
 	}
 
