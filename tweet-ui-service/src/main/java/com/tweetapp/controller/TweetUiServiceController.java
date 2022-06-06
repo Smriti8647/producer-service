@@ -41,7 +41,6 @@ public class TweetUiServiceController {
 	
 	@GetMapping("/{username}")
 	public ResponseEntity<?> getTweets(@RequestHeader("Authorization") final String token, @PathVariable("username") String username){
-System.out.println("controller");
 		return tweetUiService.getTweets(token, username);
 	}
 	
