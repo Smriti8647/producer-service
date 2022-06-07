@@ -1,7 +1,9 @@
 package com.tweetapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tweetapp.common.ApiResponse;
 import com.tweetapp.model.Comment;
+import com.tweetapp.model.Tag;
 import com.tweetapp.model.Tweet;
 import com.tweetapp.service.TweetUiService;
 
@@ -23,6 +26,7 @@ public class TweetUiServiceController {
 
 	@Autowired
 	TweetUiService tweetUiService;
+	
 	
 	@GetMapping("/all")
 	public  ResponseEntity<ApiResponse> getAllTweet(@RequestHeader("Authorization") final String token){
@@ -73,4 +77,10 @@ public class TweetUiServiceController {
 	public ResponseEntity<ApiResponse> replyTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id, @RequestBody Comment comment ){
 		return tweetUiService.replyTweet(token, username, id, comment);
 	}
+	
+	@PutMapping("/tag")
+	public ResponseEntity<?> setTag(@RequestHeader("Authorization") final String token, @RequestBody Tag tag) {
+		return tweetUiService.setTag(token, tag);
+	}
+	
 }
