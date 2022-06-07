@@ -1,7 +1,10 @@
 package com.tweetapp.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import com.tweetapp.client.UpdateServiceClient;
 import com.tweetapp.common.ApiResponse;
 import com.tweetapp.model.Comment;
 import com.tweetapp.model.Tweet;
+import com.tweetapp.model.UserResponse;
 import com.tweetapp.model.ValidationResponse;
 
 import feign.FeignException;
@@ -24,12 +28,18 @@ public class TweetUiServiceImpl implements TweetUiService {
 
 	@Autowired
 	AuthenticationServiceClient authenticationServiceClient;
+	
+	public static final Logger LOGGER = LoggerFactory.getLogger(TweetUiServiceImpl.class);
 
 	public ResponseEntity<ApiResponse> getAllTweet(final String token) {
 		try {
 			ValidationResponse validationResponse = jwtTokenValidation(token);
 			if (validationResponse.getIsSuccess()) {
-				ResponseEntity<?> response = updateServiceClient.tweets();
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{}, Information: Fetching All Tweets ", this.getClass().getSimpleName());
+				}
+				ResponseEntity<List<Tweet>> response = updateServiceClient.tweets();
+				
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
 				return createUnauthorizedResponse(validationResponse);
@@ -37,6 +47,7 @@ public class TweetUiServiceImpl implements TweetUiService {
 		} catch (FeignException e) {
 			return createFeignExceptionResponse(e);
 		} catch (RuntimeException e) {
+			
 			return createRuntimeExceptionResponse(e);
 		}
 	}
@@ -45,7 +56,10 @@ public class TweetUiServiceImpl implements TweetUiService {
 		try {
 			ValidationResponse validationResponse = jwtTokenValidation(token);
 			if (validationResponse.getIsSuccess()) {
-				ResponseEntity<?> response = updateServiceClient.allUsers();
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{}, Information: Fetching Users ", this.getClass().getSimpleName());
+				}
+				ResponseEntity<List<UserResponse>> response = updateServiceClient.allUsers();
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
 				return createUnauthorizedResponse(validationResponse);
@@ -61,7 +75,10 @@ public class TweetUiServiceImpl implements TweetUiService {
 		try {
 			ValidationResponse validationResponse = jwtTokenValidation(token);
 			if (validationResponse.getIsSuccess()) {
-				ResponseEntity<?> response = updateServiceClient.findUser(username);
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{}, Information: Fetching Users ", this.getClass().getSimpleName());
+				}
+				ResponseEntity<List<UserResponse>> response = updateServiceClient.findUser(username);
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
 				return createUnauthorizedResponse(validationResponse);
@@ -77,7 +94,10 @@ public class TweetUiServiceImpl implements TweetUiService {
 		try {
 			ValidationResponse validationResponse = jwtTokenValidation(token);
 			if (validationResponse.getIsSuccess()) {
-				ResponseEntity<?> response = updateServiceClient.tweets(username);
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{}, Information: Fetching Tweets ", this.getClass().getSimpleName());
+				}
+				ResponseEntity<List<Tweet>> response = updateServiceClient.tweets(username);
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
 				return createUnauthorizedResponse(validationResponse);
@@ -95,7 +115,10 @@ public class TweetUiServiceImpl implements TweetUiService {
 			if (validationResponse.getIsSuccess()) {
 				tweet.setLoginId(validationResponse.getUserId());
 				tweet.setTime(LocalDateTime.now());
-				ResponseEntity<?> response = updateServiceClient.addTweet(tweet);
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{}, Information: Creating Tweet ", this.getClass().getSimpleName());
+				}
+				ResponseEntity<String> response = updateServiceClient.addTweet(tweet);
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
 				return createUnauthorizedResponse(validationResponse);
@@ -111,7 +134,10 @@ public class TweetUiServiceImpl implements TweetUiService {
 		try {
 			ValidationResponse validationResponse = jwtTokenValidation(token);
 			if (validationResponse.getIsSuccess()) {
-				ResponseEntity<?> response = updateServiceClient.updateTweet(updateTweet, id);
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{}, Information: Updating Tweet ", this.getClass().getSimpleName());
+				}
+				ResponseEntity<String> response = updateServiceClient.updateTweet(updateTweet, id);
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
 				return createUnauthorizedResponse(validationResponse);
@@ -127,7 +153,10 @@ public class TweetUiServiceImpl implements TweetUiService {
 		try {
 			ValidationResponse validationResponse = jwtTokenValidation(token);
 			if (validationResponse.getIsSuccess()) {
-				ResponseEntity<?> response = updateServiceClient.deleteTweet(username, id);
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{}, Information: Deleting Tweet ", this.getClass().getSimpleName());
+				}
+				ResponseEntity<String> response = updateServiceClient.deleteTweet(username, id);
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
 				return createUnauthorizedResponse(validationResponse);
@@ -143,7 +172,7 @@ public class TweetUiServiceImpl implements TweetUiService {
 		try {
 			ValidationResponse validationResponse = jwtTokenValidation(token);
 			if (validationResponse.getIsSuccess()) {
-				ResponseEntity<?> response = updateServiceClient.likeTweet(username, id);
+				ResponseEntity<String> response = updateServiceClient.likeTweet(username, id);
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
 				return createUnauthorizedResponse(validationResponse);
@@ -159,7 +188,7 @@ public class TweetUiServiceImpl implements TweetUiService {
 		try {
 			ValidationResponse validationResponse = jwtTokenValidation(token);
 			if (validationResponse.getIsSuccess()) {
-				ResponseEntity<?> response = updateServiceClient.dislikeTweet(username, id);
+				ResponseEntity<String> response = updateServiceClient.dislikeTweet(username, id);
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
 				return createUnauthorizedResponse(validationResponse);
@@ -176,7 +205,7 @@ public class TweetUiServiceImpl implements TweetUiService {
 			ValidationResponse validationResponse = jwtTokenValidation(token);
 			if (validationResponse.getIsSuccess()) {
 				comment.setTime(LocalDateTime.now());
-				ResponseEntity<?> response = updateServiceClient.replyTweet(comment, id);
+				ResponseEntity<String> response = updateServiceClient.replyTweet(comment, id);
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
 				return createUnauthorizedResponse(validationResponse);
@@ -196,8 +225,12 @@ public class TweetUiServiceImpl implements TweetUiService {
 	}
 
 	private ResponseEntity<ApiResponse> createFeignExceptionResponse(FeignException e) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug(
+					"{}, Information: Throwing FeignException with message "+ e.getMessage(),
+					this.getClass().getSimpleName());
+		}
 		ApiResponse apiResponse = new ApiResponse();
-		System.out.println(e.contentUTF8());
 		apiResponse.setError(e.contentUTF8() == "" ? e.getMessage() : e.contentUTF8());
 		apiResponse.setSuccess(false);
 		HttpStatus status = e.status() == -1 ? HttpStatus.INTERNAL_SERVER_ERROR : HttpStatus.valueOf(e.status());
@@ -205,6 +238,11 @@ public class TweetUiServiceImpl implements TweetUiService {
 	}
 
 	private ResponseEntity<ApiResponse> createRuntimeExceptionResponse(RuntimeException e) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug(
+					"{}, Information: Throwing RuntimeException with message "+ e.getMessage(),
+					this.getClass().getSimpleName());
+		}
 		ApiResponse apiResponse = new ApiResponse();
 		apiResponse.setError(e.getMessage());
 		apiResponse.setSuccess(false);
@@ -213,15 +251,28 @@ public class TweetUiServiceImpl implements TweetUiService {
 
 	private ValidationResponse jwtTokenValidation(String token) {
 		try {
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("{}, Information: Validating JWT token", this.getClass().getSimpleName());
+			}
 			ValidationResponse reponse = authenticationServiceClient.validateAndReturnUser(token).getBody();
 			return reponse;
 		} catch (FeignException.Unauthorized e) {
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug(
+						"{}, Information: Throwing FeignException.Unauthorized with message "+ e.getMessage(),
+						this.getClass().getSimpleName());
+			}
 			ValidationResponse validationResponse = new ValidationResponse();
 			validationResponse.setIsSuccess(false);
 			validationResponse.setMessage("JWT Token is Not Valid");
 			validationResponse.setCode(HttpStatus.valueOf(e.status()));
 			return validationResponse;
 		} catch (FeignException e) {
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug(
+						"{}, Information: Throwing FeignException with message "+ e.getMessage(),
+						this.getClass().getSimpleName());
+			}
 			ValidationResponse validationResponse = new ValidationResponse();
 			validationResponse.setIsSuccess(false);
 			validationResponse.setMessage("Exception occurred while invoking authentication Api");

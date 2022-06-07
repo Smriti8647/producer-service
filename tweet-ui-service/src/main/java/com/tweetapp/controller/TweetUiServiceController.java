@@ -25,52 +25,52 @@ public class TweetUiServiceController {
 	TweetUiService tweetUiService;
 	
 	@GetMapping("/all")
-	public  ResponseEntity<ApiResponse>  getAllTweet(@RequestHeader("Authorization") final String token){
+	public  ResponseEntity<ApiResponse> getAllTweet(@RequestHeader("Authorization") final String token){
 		return tweetUiService.getAllTweet(token);
 	}
 	
 	@GetMapping("/user/all")
-	public ResponseEntity<?> getUsers(@RequestHeader("Authorization") final String token){
+	public ResponseEntity<ApiResponse> getUsers(@RequestHeader("Authorization") final String token){
 		return tweetUiService.getUsers(token);
 	}
 	
 	@GetMapping("/user/search/{username}")
-	public ResponseEntity<?> getUsers(@RequestHeader("Authorization") final String token, @PathVariable("username") String username){
+	public ResponseEntity<ApiResponse> getUsers(@RequestHeader("Authorization") final String token, @PathVariable("username") String username){
 		return tweetUiService.getUsers(token, username);
 	}
 	
 	@GetMapping("/{username}")
-	public ResponseEntity<?> getTweets(@RequestHeader("Authorization") final String token, @PathVariable("username") String username){
+	public ResponseEntity<ApiResponse> getTweets(@RequestHeader("Authorization") final String token, @PathVariable("username") String username){
 		return tweetUiService.getTweets(token, username);
 	}
 	
 	@PostMapping("/{username}/add")
-    public ResponseEntity<?> createNewTweet(@RequestHeader("Authorization") final String token, @RequestBody Tweet tweet) {
+    public ResponseEntity<ApiResponse> createNewTweet(@RequestHeader("Authorization") final String token, @RequestBody Tweet tweet) {
 		return tweetUiService.createNewTweet(token, tweet);
 	}
 	
 	@PutMapping("/{username}/update/{id}")
-	public ResponseEntity<?> updateTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id, @RequestBody String updateTweet){
+	public ResponseEntity<ApiResponse> updateTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id, @RequestBody String updateTweet){
 		return tweetUiService.updateTweet(token, username, id, updateTweet);
 	}
 	
 	@DeleteMapping("/{username}/delete/{id}")
-	public ResponseEntity<?> deleteTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id){
+	public ResponseEntity<ApiResponse> deleteTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id){
 		return tweetUiService.deleteTweet(token, username, id);
 	}
 	
 	@PutMapping("/{username}/like/{id}")
-	public ResponseEntity<?> likeTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id){
+	public ResponseEntity<ApiResponse> likeTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id){
 		return tweetUiService.likeTweet(token, username, id);
 	}
 	
 	@PutMapping("/{username}/remove-like/{id}")
-	public ResponseEntity<?> removeLikeTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id){
+	public ResponseEntity<ApiResponse> removeLikeTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id){
 		return tweetUiService.removeLikeTweet(token, username, id);
 	}
 	
 	@PutMapping("/{username}/reply/{id}")
-	public ResponseEntity<?> replyTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id, @RequestBody Comment comment ){
+	public ResponseEntity<ApiResponse> replyTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id, @RequestBody Comment comment ){
 		return tweetUiService.replyTweet(token, username, id, comment);
 	}
 }
