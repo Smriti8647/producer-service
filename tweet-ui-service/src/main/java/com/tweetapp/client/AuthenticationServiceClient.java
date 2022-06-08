@@ -12,7 +12,7 @@ import com.tweetapp.model.ValidationResponse;
 @FeignClient(value="tweet-authentication-service", url = "http://localhost:8082")
 public interface AuthenticationServiceClient {
 
-	@PostMapping("/api/auth/validate")
+	@PostMapping("/api/v1.0/tweets/validate")
 	public ResponseEntity<ValidationResponse> validateAndReturnUser(@RequestHeader("Authorization") final String token);
 	
 }

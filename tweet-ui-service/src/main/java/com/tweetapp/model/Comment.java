@@ -2,9 +2,15 @@ package com.tweetapp.model;
 
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Comment {
 	
+	@NotNull
+	@Size(min=1, max=144)
 	private String commentMessage;
+	@NotNull
 	private String commentor;
 	private LocalDateTime time;
 	public String getCommentMessage() {

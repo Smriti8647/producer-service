@@ -2,6 +2,7 @@ package com.tweetapp.controller;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -11,11 +12,13 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 
 import com.tweetapp.common.ApiResponse;
 import com.tweetapp.model.Comment;
 import com.tweetapp.model.Tag;
 import com.tweetapp.model.Tweet;
+import com.tweetapp.model.UpdateTweet;
 import com.tweetapp.service.TweetUiService;
 
 @SpringBootTest
@@ -27,13 +30,8 @@ public class TweetUiServiceControllerTest {
 	@Mock
 	TweetUiService tweetUiService;
 
-	@BeforeAll
-	public static void init() {
-		TweetUiServiceController controller = new TweetUiServiceController();
-	}
-
 	@Test
-	 void testGetAllTweet() {
+	void testGetAllTweet() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		when(tweetUiService.getAllTweet(anyString())).thenReturn(responseEntity);
@@ -42,25 +40,25 @@ public class TweetUiServiceControllerTest {
 	}
 
 	@Test
-	 void testGetUsers() {
+	void testGetUsers() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		when(tweetUiService.getUsers(anyString())).thenReturn(responseEntity);
 		ResponseEntity<ApiResponse> object = controller.getUsers(anyString());
 		assertNotNull(object);
 	}
-	
+
 	@Test
-	 void testGetUsers_bySearch() {
+	void testGetUsers_bySearch() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
-		when(tweetUiService.getUsers(anyString(),anyString())).thenReturn(responseEntity);
-		ResponseEntity<ApiResponse> object = controller.getUsers(anyString(),anyString());
+		when(tweetUiService.getUsers(anyString(), anyString())).thenReturn(responseEntity);
+		ResponseEntity<ApiResponse> object = controller.getUsers(anyString(), anyString());
 		assertNotNull(object);
 	}
 
 	@Test
-	 void testGetTweets() {
+	void testGetTweets() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		when(tweetUiService.getTweets(anyString(), anyString())).thenReturn(responseEntity);
@@ -69,26 +67,32 @@ public class TweetUiServiceControllerTest {
 	}
 
 	@Test
-	 void testCreateNewTweet() {
+	void testCreateNewTweet() {
+		BindingResult result = mock(BindingResult.class);
+		when(result.hasErrors()).thenReturn(true);
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		Tweet tweet = new Tweet();
 		when(tweetUiService.createNewTweet("jwtToken", tweet)).thenReturn(responseEntity);
-		ResponseEntity<ApiResponse> object = controller.createNewTweet("jwtToken", tweet);
+		ResponseEntity<ApiResponse> object = controller.createNewTweet("jwtToken", tweet, result);
 		assertNotNull(object);
 	}
 
 	@Test
-	 void testUpdateTweet() {
+	void testUpdateTweet() {
+		BindingResult result = mock(BindingResult.class);
+		when(result.hasErrors()).thenReturn(true);
 		ApiResponse response = new ApiResponse();
+		UpdateTweet updateTweet = new UpdateTweet();
+		updateTweet.setMessage("new Tweet");
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
-		when(tweetUiService.updateTweet("jwtToken", "sam", "tweetId", "new Tweet")).thenReturn(responseEntity);
-		ResponseEntity<ApiResponse> object = controller.updateTweet("jwtToken", "sam", "tweetId", "new Tweet");
+		when(tweetUiService.updateTweet("jwtToken", "sam", "tweetId", updateTweet)).thenReturn(responseEntity);
+		ResponseEntity<ApiResponse> object = controller.updateTweet("jwtToken", "sam", "tweetId", updateTweet, result);
 		assertNotNull(object);
 	}
 
 	@Test
-	 void testLikeTweet() {
+	void testLikeTweet() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		when(tweetUiService.likeTweet("jwtToken", "sam", "tweetId")).thenReturn(responseEntity);
@@ -97,7 +101,7 @@ public class TweetUiServiceControllerTest {
 	}
 
 	@Test
-	 void testRemoveLikeTweet() {
+	void testRemoveLikeTweet() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		when(tweetUiService.removeLikeTweet("jwtToken", "sam", "tweetId")).thenReturn(responseEntity);
@@ -106,7 +110,7 @@ public class TweetUiServiceControllerTest {
 	}
 
 	@Test
-	 void testDeleteTweet() {
+	void testDeleteTweet() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		when(tweetUiService.deleteTweet("jwtToken", "sam", "tweetId")).thenReturn(responseEntity);
@@ -115,22 +119,26 @@ public class TweetUiServiceControllerTest {
 	}
 
 	@Test
-	 void testReplyTweet() {
+	void testReplyTweet() {
+		BindingResult result = mock(BindingResult.class);
+		when(result.hasErrors()).thenReturn(true);
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		Comment comment = new Comment();
 		when(tweetUiService.replyTweet("jwtToken", "sam", "tweetId", comment)).thenReturn(responseEntity);
-		ResponseEntity<ApiResponse> object = controller.replyTweet("jwtToken", "sam", "tweetId", comment);
+		ResponseEntity<ApiResponse> object = controller.replyTweet("jwtToken", "sam", "tweetId", comment, result);
 		assertNotNull(object);
 	}
-	
+
 	@Test
-	 void testsetTag() {
+	void testsetTag() {
+		BindingResult result = mock(BindingResult.class);
+		when(result.hasErrors()).thenReturn(true);
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
-		Tag tag=new Tag();
-		when(tweetUiService.setTag("jwtToken",tag)).thenReturn(responseEntity);
-		ResponseEntity<ApiResponse> object = controller.setTag("jwtToken",tag);
+		Tag tag = new Tag();
+		when(tweetUiService.setTag("jwtToken", tag)).thenReturn(responseEntity);
+		ResponseEntity<ApiResponse> object = controller.setTag("jwtToken", tag, result);
 		assertNotNull(object);
 	}
 }

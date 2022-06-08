@@ -6,6 +6,7 @@ import com.tweetapp.common.ApiResponse;
 import com.tweetapp.model.Comment;
 import com.tweetapp.model.Tag;
 import com.tweetapp.model.Tweet;
+import com.tweetapp.model.UpdateTweet;
 
 public interface TweetUiService {
 
@@ -19,7 +20,7 @@ public interface TweetUiService {
 
 	public ResponseEntity<ApiResponse> createNewTweet(final String token, Tweet tweet);
 
-	public ResponseEntity<ApiResponse> updateTweet(final String token, String username, String id, String updateTweet);
+	public ResponseEntity<ApiResponse> updateTweet(final String token, String username, String id, UpdateTweet updateTweet);
 
 	public ResponseEntity<ApiResponse> deleteTweet(final String token, String username, String id);
 

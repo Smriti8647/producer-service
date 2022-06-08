@@ -18,6 +18,7 @@ import com.tweetapp.common.ApiResponse;
 import com.tweetapp.model.Comment;
 import com.tweetapp.model.Tag;
 import com.tweetapp.model.Tweet;
+import com.tweetapp.model.UpdateTweet;
 import com.tweetapp.model.UserResponse;
 import com.tweetapp.model.ValidationResponse;
 
@@ -36,8 +37,8 @@ public class TweetUiServiceImpl implements TweetUiService {
 	@Autowired
 	private KafkaTemplate<String, Tag> kafkaTemplate;
 	
-	@Value("kafka-topic")
-	private String TOPIC;
+	@Value("${kafka-topic}")
+	private String topic;
 
 	public ResponseEntity<ApiResponse> getAllTweet(final String token) {
 		try {
@@ -138,14 +139,14 @@ public class TweetUiServiceImpl implements TweetUiService {
 		}
 	}
 
-	public ResponseEntity<ApiResponse> updateTweet(final String token, String username, String id, String updateTweet) {
+	public ResponseEntity<ApiResponse> updateTweet(final String token, String username, String id, UpdateTweet updateTweet) {
 		try {
 			ValidationResponse validationResponse = jwtTokenValidation(token);
 			if (validationResponse!=null && validationResponse.getIsSuccess()) {
 				if (LOGGER.isDebugEnabled()) {
 					LOGGER.debug("{}, Information: Updating Tweet ", this.getClass().getSimpleName());
 				}
-				ResponseEntity<String> response = updateServiceClient.updateTweet(updateTweet, id);
+				ResponseEntity<String> response = updateServiceClient.updateTweet(updateTweet.getMessage(), id);
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
 				return createUnauthorizedResponse(validationResponse);
@@ -302,7 +303,7 @@ public class TweetUiServiceImpl implements TweetUiService {
 		try {
 			ValidationResponse validationResponse = jwtTokenValidation(token);
 			if (validationResponse!=null && validationResponse.getIsSuccess()) {
-				kafkaTemplate.send("tweetTag", tag);
+				kafkaTemplate.send(topic, tag);
 				return new ResponseEntity<>(new ApiResponse(true, "tags sent"), HttpStatus.OK);
 			} else {
 				return createUnauthorizedResponse(validationResponse);

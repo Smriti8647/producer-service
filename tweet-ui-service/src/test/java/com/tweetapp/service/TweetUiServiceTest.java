@@ -24,6 +24,7 @@ import com.tweetapp.client.UpdateServiceClient;
 import com.tweetapp.common.ApiResponse;
 import com.tweetapp.model.Comment;
 import com.tweetapp.model.Tweet;
+import com.tweetapp.model.UpdateTweet;
 import com.tweetapp.model.UserResponse;
 import com.tweetapp.model.ValidationResponse;
 
@@ -216,7 +217,7 @@ public class TweetUiServiceTest {
 				.thenReturn(new ResponseEntity<>(validationResponse, HttpStatus.OK));
 		ResponseEntity<String> response = new ResponseEntity<>("hey all", HttpStatus.OK);
 		when(updateServiceClient.updateTweet("new Tweet", "tweetId")).thenReturn(response);
-		ResponseEntity<ApiResponse> object = tweetService.updateTweet(anyString(), "sam", "new Tweet", "tweetId");
+		ResponseEntity<ApiResponse> object = tweetService.updateTweet(anyString(), "sam", "tweetId", new UpdateTweet());
 		assertNotNull(object);
 	}
 	
@@ -227,7 +228,7 @@ public class TweetUiServiceTest {
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
 				.thenReturn(new ResponseEntity<>(validationResponse, HttpStatus.OK));
 		when(updateServiceClient.updateTweet(anyString(), anyString())).thenThrow(new RuntimeException());
-		ResponseEntity<ApiResponse> object = tweetService.updateTweet(anyString(), "sam", "new Tweet", "tweetId");
+		ResponseEntity<ApiResponse> object = tweetService.updateTweet(anyString(), "sam", "tweetId", new UpdateTweet());
 		assertEquals(false,object.getBody().getSuccess());
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,object.getStatusCode());
 	}

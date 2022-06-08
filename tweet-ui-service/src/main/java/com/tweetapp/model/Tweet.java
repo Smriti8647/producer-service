@@ -3,14 +3,21 @@ package com.tweetapp.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 
 
 public class Tweet {
 	
 	
 	private String id;
+	@NotNull
 	private String loginId;
+	@NotNull
 	private String avtar;
+	@NotNull
+	@Size(min=1, max=144)
 	private String message;
 	private LocalDateTime time;
 	private List<String> isLikeList;

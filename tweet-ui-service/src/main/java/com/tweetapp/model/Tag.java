@@ -2,9 +2,13 @@ package com.tweetapp.model;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 public class Tag {
 
+	@NotNull
 	private String tweetId;
+	@NotNull
 	private List<String> users;
 
 	public Tag() {

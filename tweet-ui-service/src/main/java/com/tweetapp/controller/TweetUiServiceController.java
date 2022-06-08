@@ -1,9 +1,14 @@
 package com.tweetapp.controller;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,12 +17,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tweetapp.common.ApiResponse;
 import com.tweetapp.model.Comment;
 import com.tweetapp.model.Tag;
 import com.tweetapp.model.Tweet;
+import com.tweetapp.model.UpdateTweet;
 import com.tweetapp.service.TweetUiService;
 
 @RestController
@@ -65,7 +72,9 @@ public class TweetUiServiceController {
 
 	@PostMapping("/{username}/add")
 	public ResponseEntity<ApiResponse> createNewTweet(@RequestHeader("Authorization") final String token,
-			@RequestBody Tweet tweet) {
+			@Valid @RequestBody Tweet tweet, final BindingResult result) {
+		if (result.hasErrors())
+			return new ResponseEntity<>(new ApiResponse("Validations not passed "), HttpStatus.BAD_REQUEST);
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("{}, Information: Calling Service to add new tweet for User {}", this.getClass().getSimpleName(),tweet.getLoginId());
 		}
@@ -74,7 +83,9 @@ public class TweetUiServiceController {
 
 	@PutMapping("/{username}/update/{id}")
 	public ResponseEntity<ApiResponse> updateTweet(@RequestHeader("Authorization") final String token,
-			@PathVariable("username") String username, @PathVariable("id") String id, @RequestBody String updateTweet) {
+			@PathVariable("username") String username, @PathVariable("id") String id, @Valid @RequestBody UpdateTweet updateTweet, final BindingResult result) {
+		if (result.hasErrors())
+			return new ResponseEntity<>(new ApiResponse("Validations not passed"), HttpStatus.BAD_REQUEST);
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("{}, Information: Calling Service to update tweet with id {}", this.getClass().getSimpleName(),id);
 		}
@@ -110,15 +121,20 @@ public class TweetUiServiceController {
 
 	@PutMapping("/{username}/reply/{id}")
 	public ResponseEntity<ApiResponse> replyTweet(@RequestHeader("Authorization") final String token,
-			@PathVariable("username") String username, @PathVariable("id") String id, @RequestBody Comment comment) {
+			@PathVariable("username") String username, @PathVariable("id") String id, @Valid @RequestBody Comment comment, final BindingResult result) {
+		if (result.hasErrors())
+			return new ResponseEntity<>(new ApiResponse("Validations not passed."), HttpStatus.BAD_REQUEST);
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("{}, Information: Calling Service to add comment to a tweet with id {}", this.getClass().getSimpleName(),id);
 		}
+		
 		return tweetUiService.replyTweet(token, username, id, comment);
 	}
 
 	@PutMapping("/tag")
-	public ResponseEntity<ApiResponse> setTag(@RequestHeader("Authorization") final String token, @RequestBody Tag tag) {
+	public ResponseEntity<ApiResponse> setTag(@RequestHeader("Authorization") final String token, @Valid @RequestBody Tag tag, final BindingResult result) {
+		if (result.hasErrors())
+			return new ResponseEntity<>(new ApiResponse("Validations not passed"), HttpStatus.BAD_REQUEST);
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("{}, Information: Calling Service to tag users on a tweet with id {}", this.getClass().getSimpleName(),tag.getTweetId());
 		}
