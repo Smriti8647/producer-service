@@ -32,15 +32,12 @@ public class TweetUiServiceImpl implements TweetUiService {
 	@Autowired
 	AuthenticationServiceClient authenticationServiceClient;
 	
-<<<<<<< HEAD
 	public static final Logger LOGGER = LoggerFactory.getLogger(TweetUiServiceImpl.class);
-=======
 	@Autowired
 	private KafkaTemplate<String, Tag> kafkaTemplate;
 	
 	@Value("kafka-topic")
 	private String TOPIC;
->>>>>>> 693ff6c49121e324265835abbb7fb0341901658c
 
 	public ResponseEntity<ApiResponse> getAllTweet(final String token) {
 		try {
@@ -183,6 +180,9 @@ public class TweetUiServiceImpl implements TweetUiService {
 		try {
 			ValidationResponse validationResponse = jwtTokenValidation(token);
 			if (validationResponse.getIsSuccess()) {
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{}, Information: Adding Like to the Tweet ", this.getClass().getSimpleName());
+				}
 				ResponseEntity<String> response = updateServiceClient.likeTweet(username, id);
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
@@ -199,6 +199,9 @@ public class TweetUiServiceImpl implements TweetUiService {
 		try {
 			ValidationResponse validationResponse = jwtTokenValidation(token);
 			if (validationResponse.getIsSuccess()) {
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{}, Information: removing Like from the Tweet ", this.getClass().getSimpleName());
+				}
 				ResponseEntity<String> response = updateServiceClient.dislikeTweet(username, id);
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
@@ -215,6 +218,9 @@ public class TweetUiServiceImpl implements TweetUiService {
 		try {
 			ValidationResponse validationResponse = jwtTokenValidation(token);
 			if (validationResponse.getIsSuccess()) {
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{}, Information: Adding comment to the Tweet ", this.getClass().getSimpleName());
+				}
 				comment.setTime(LocalDateTime.now());
 				ResponseEntity<String> response = updateServiceClient.replyTweet(comment, id);
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());

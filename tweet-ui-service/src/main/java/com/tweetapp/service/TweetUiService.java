@@ -33,6 +33,6 @@ public interface TweetUiService {
 
 	public ResponseEntity<ApiResponse> replyTweet(final String token, String username, String id, Comment comment);
 
-	public ResponseEntity<?> setTag(final String token, Tag tag);
+	public ResponseEntity<ApiResponse> setTag(final String token, Tag tag);
 
 }

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.tweetapp.common.ApiResponse;
 import com.tweetapp.model.Comment;
+import com.tweetapp.model.Tag;
 import com.tweetapp.model.Tweet;
 import com.tweetapp.service.TweetUiService;
 
@@ -46,6 +47,15 @@ public class TweetUiServiceControllerTest {
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		when(tweetUiService.getUsers(anyString())).thenReturn(responseEntity);
 		ResponseEntity<ApiResponse> object = controller.getUsers(anyString());
+		assertNotNull(object);
+	}
+	
+	@Test
+	public void testGetUsers_bySearch() {
+		ApiResponse response = new ApiResponse();
+		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
+		when(tweetUiService.getUsers(anyString(),anyString())).thenReturn(responseEntity);
+		ResponseEntity<ApiResponse> object = controller.getUsers(anyString(),anyString());
 		assertNotNull(object);
 	}
 
@@ -111,6 +121,16 @@ public class TweetUiServiceControllerTest {
 		Comment comment = new Comment();
 		when(tweetUiService.replyTweet("jwtToken", "sam", "tweetId", comment)).thenReturn(responseEntity);
 		ResponseEntity<ApiResponse> object = controller.replyTweet("jwtToken", "sam", "tweetId", comment);
+		assertNotNull(object);
+	}
+	
+	@Test
+	public void testsetTag() {
+		ApiResponse response = new ApiResponse();
+		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
+		Tag tag=new Tag();
+		when(tweetUiService.setTag("jwtToken",tag)).thenReturn(responseEntity);
+		ResponseEntity<ApiResponse> object = controller.setTag("jwtToken",tag);
 		assertNotNull(object);
 	}
 }

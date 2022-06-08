@@ -1,9 +1,9 @@
 package com.tweetapp.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,64 +23,106 @@ import com.tweetapp.service.TweetUiService;
 @RestController
 @RequestMapping("api/v1.0/tweets")
 public class TweetUiServiceController {
+	
+	public static final Logger LOGGER = LoggerFactory.getLogger(TweetUiServiceController.class);
 
 	@Autowired
 	TweetUiService tweetUiService;
-	
-	
+
 	@GetMapping("/all")
-	public  ResponseEntity<ApiResponse> getAllTweet(@RequestHeader("Authorization") final String token){
+	public ResponseEntity<ApiResponse> getAllTweet(@RequestHeader("Authorization") final String token) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}, Information: Calling Service to Fetch All Tweets ", this.getClass().getSimpleName());
+		}
 		return tweetUiService.getAllTweet(token);
 	}
-	
+
 	@GetMapping("/user/all")
-	public ResponseEntity<ApiResponse> getUsers(@RequestHeader("Authorization") final String token){
+	public ResponseEntity<ApiResponse> getUsers(@RequestHeader("Authorization") final String token) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}, Information: Calling Service to Fetch All Users ", this.getClass().getSimpleName());
+		}
 		return tweetUiService.getUsers(token);
 	}
-	
+
 	@GetMapping("/user/search/{username}")
-	public ResponseEntity<ApiResponse> getUsers(@RequestHeader("Authorization") final String token, @PathVariable("username") String username){
+	public ResponseEntity<ApiResponse> getUsers(@RequestHeader("Authorization") final String token,
+			@PathVariable("username") String username) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}, Information: Calling Service to get User {}", this.getClass().getSimpleName(),username);
+		}
 		return tweetUiService.getUsers(token, username);
 	}
-	
+
 	@GetMapping("/{username}")
-	public ResponseEntity<ApiResponse> getTweets(@RequestHeader("Authorization") final String token, @PathVariable("username") String username){
+	public ResponseEntity<ApiResponse> getTweets(@RequestHeader("Authorization") final String token,
+			@PathVariable("username") String username) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}, Information: Calling Service to get tweets of User {}", this.getClass().getSimpleName(),username);
+		}
 		return tweetUiService.getTweets(token, username);
 	}
-	
+
 	@PostMapping("/{username}/add")
-    public ResponseEntity<ApiResponse> createNewTweet(@RequestHeader("Authorization") final String token, @RequestBody Tweet tweet) {
+	public ResponseEntity<ApiResponse> createNewTweet(@RequestHeader("Authorization") final String token,
+			@RequestBody Tweet tweet) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}, Information: Calling Service to add new tweet for User {}", this.getClass().getSimpleName(),tweet.getLoginId());
+		}
 		return tweetUiService.createNewTweet(token, tweet);
 	}
-	
+
 	@PutMapping("/{username}/update/{id}")
-	public ResponseEntity<ApiResponse> updateTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id, @RequestBody String updateTweet){
+	public ResponseEntity<ApiResponse> updateTweet(@RequestHeader("Authorization") final String token,
+			@PathVariable("username") String username, @PathVariable("id") String id, @RequestBody String updateTweet) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}, Information: Calling Service to update tweet with id {}", this.getClass().getSimpleName(),id);
+		}
 		return tweetUiService.updateTweet(token, username, id, updateTweet);
 	}
-	
+
 	@DeleteMapping("/{username}/delete/{id}")
-	public ResponseEntity<ApiResponse> deleteTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id){
+	public ResponseEntity<ApiResponse> deleteTweet(@RequestHeader("Authorization") final String token,
+			@PathVariable("username") String username, @PathVariable("id") String id) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}, Information: Calling Service to delete tweet with id {}", this.getClass().getSimpleName(),id);
+		}
 		return tweetUiService.deleteTweet(token, username, id);
 	}
-	
+
 	@PutMapping("/{username}/like/{id}")
-	public ResponseEntity<ApiResponse> likeTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id){
+	public ResponseEntity<ApiResponse> likeTweet(@RequestHeader("Authorization") final String token,
+			@PathVariable("username") String username, @PathVariable("id") String id) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}, Information: Calling Service to like tweet with id {}", this.getClass().getSimpleName(),id);
+		}
 		return tweetUiService.likeTweet(token, username, id);
 	}
-	
+
 	@PutMapping("/{username}/remove-like/{id}")
-	public ResponseEntity<ApiResponse> removeLikeTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id){
+	public ResponseEntity<ApiResponse> removeLikeTweet(@RequestHeader("Authorization") final String token,
+			@PathVariable("username") String username, @PathVariable("id") String id) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}, Information: Calling Service to remove like from tweet with id {}", this.getClass().getSimpleName(),id);
+		}
 		return tweetUiService.removeLikeTweet(token, username, id);
 	}
-	
+
 	@PutMapping("/{username}/reply/{id}")
-	public ResponseEntity<ApiResponse> replyTweet(@RequestHeader("Authorization") final String token, @PathVariable("username") String username,@PathVariable("id") String id, @RequestBody Comment comment ){
+	public ResponseEntity<ApiResponse> replyTweet(@RequestHeader("Authorization") final String token,
+			@PathVariable("username") String username, @PathVariable("id") String id, @RequestBody Comment comment) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}, Information: Calling Service to add comment to a tweet with id {}", this.getClass().getSimpleName(),id);
+		}
 		return tweetUiService.replyTweet(token, username, id, comment);
 	}
-	
+
 	@PutMapping("/tag")
-	public ResponseEntity<?> setTag(@RequestHeader("Authorization") final String token, @RequestBody Tag tag) {
+	public ResponseEntity<ApiResponse> setTag(@RequestHeader("Authorization") final String token, @RequestBody Tag tag) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}, Information: Calling Service to tag users on a tweet with id {}", this.getClass().getSimpleName(),tag.getTweetId());
+		}
 		return tweetUiService.setTag(token, tag);
 	}
-	
+
 }
