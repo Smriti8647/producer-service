@@ -11,22 +11,22 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class TagTest {
-	
+
 	private Tag tag;
-	
+
 	@BeforeEach
-	 void setUp() {
-		tag=new Tag();
+	void setUp() {
+		tag = new Tag();
 		tag.setTweetId("abc");
-		List<String> userList= new ArrayList<>();
+		List<String> userList = new ArrayList<>();
 		userList.add("sasha");
 		tag.setUsers(userList);
 	}
-	
-	 @Test
-	     void testAllGetterSetterConstructor() {
-		 assertEquals("abc",tag.getTweetId());
-		 assertEquals("sasha",tag.getUsers().get(0));
-	 }
+
+	@Test
+	void testAllGetterSetterConstructor() {
+		assertEquals("abc", tag.getTweetId());
+		assertEquals("sasha", tag.getUsers().get(0));
+	}
 
 }

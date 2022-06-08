@@ -20,7 +20,8 @@ public interface TweetUiService {
 
 	public ResponseEntity<ApiResponse> createNewTweet(final String token, Tweet tweet);
 
-	public ResponseEntity<ApiResponse> updateTweet(final String token, String username, String id, UpdateTweet updateTweet);
+	public ResponseEntity<ApiResponse> updateTweet(final String token, String username, String id,
+			UpdateTweet updateTweet);
 
 	public ResponseEntity<ApiResponse> deleteTweet(final String token, String username, String id);
 

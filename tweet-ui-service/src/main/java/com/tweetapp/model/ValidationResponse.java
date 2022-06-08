@@ -7,11 +7,9 @@ public class ValidationResponse {
 	private String userId;
 	private String message;
 	private Boolean isSuccess;
-	//@JsonIgnore
+	// @JsonIgnore
 	private HttpStatus code;
-	
-	
-	
+
 	public ValidationResponse(String userId, String message, Boolean isSuccess) {
 		super();
 		this.userId = userId;
@@ -26,12 +24,15 @@ public class ValidationResponse {
 	public String getUserId() {
 		return userId;
 	}
+
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+
 	public String getMessage() {
 		return message;
 	}
+
 	public void setMessage(String message) {
 		this.message = message;
 	}
@@ -51,6 +52,5 @@ public class ValidationResponse {
 	public void setCode(HttpStatus code) {
 		this.code = code;
 	}
-	
-	
+
 }

@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class TweetTest {
 
 	private Tweet tweet;
-	
+
 	@BeforeEach
 	public void setUp() {
 		tweet = new Tweet();
@@ -34,17 +34,17 @@ public class TweetTest {
 		commentList.add(comment);
 		tweet.setCommentList(commentList);
 	}
-	
+
 	@Test
-    public void testAllGetterSetter() {
-		assertEquals("abc",tweet.getId());
-		 assertEquals("sasha",tweet.getLoginId());
-		 assertEquals("hey, anyone up for game?",tweet.getMessage());
-		 assertEquals("avtar1",tweet.getAvtar());
-		 assertEquals(LocalDateTime.MIN,tweet.getTime());
-		 assertEquals("sarah",tweet.getIsLikeList().get(0));
-		 assertEquals("yeah",tweet.getCommentList().get(0).getCommentMessage());
-		 assertEquals("sarah",tweet.getCommentList().get(0).getCommentor());
-		 assertEquals(LocalDateTime.MIN,tweet.getCommentList().get(0).getTime());
+	public void testAllGetterSetter() {
+		assertEquals("abc", tweet.getId());
+		assertEquals("sasha", tweet.getLoginId());
+		assertEquals("hey, anyone up for game?", tweet.getMessage());
+		assertEquals("avtar1", tweet.getAvtar());
+		assertEquals(LocalDateTime.MIN, tweet.getTime());
+		assertEquals("sarah", tweet.getIsLikeList().get(0));
+		assertEquals("yeah", tweet.getCommentList().get(0).getCommentMessage());
+		assertEquals("sarah", tweet.getCommentList().get(0).getCommentor());
+		assertEquals(LocalDateTime.MIN, tweet.getCommentList().get(0).getTime());
 	}
 }

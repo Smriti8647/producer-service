@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 public class UpdateTweet {
 
 	@NotNull
-	@Size(min=1, max=144)
+	@Size(min = 1, max = 144)
 	private String message;
 
 	public String getMessage() {
@@ -16,6 +16,5 @@ public class UpdateTweet {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	
+
 }
