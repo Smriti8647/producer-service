@@ -15,7 +15,7 @@ public class TagTest {
 	private Tag tag;
 	
 	@BeforeEach
-	public void setUp() {
+	 void setUp() {
 		tag=new Tag();
 		tag.setTweetId("abc");
 		List<String> userList= new ArrayList<>();
@@ -24,7 +24,7 @@ public class TagTest {
 	}
 	
 	 @Test
-	    public void testAllGetterSetterConstructor() {
+	     void testAllGetterSetterConstructor() {
 		 assertEquals("abc",tag.getTweetId());
 		 assertEquals("sasha",tag.getUsers().get(0));
 	 }

@@ -33,7 +33,7 @@ public class TweetUiServiceControllerTest {
 	}
 
 	@Test
-	public void testGetAllTweet() {
+	 void testGetAllTweet() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		when(tweetUiService.getAllTweet(anyString())).thenReturn(responseEntity);
@@ -42,7 +42,7 @@ public class TweetUiServiceControllerTest {
 	}
 
 	@Test
-	public void testGetUsers() {
+	 void testGetUsers() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		when(tweetUiService.getUsers(anyString())).thenReturn(responseEntity);
@@ -51,7 +51,7 @@ public class TweetUiServiceControllerTest {
 	}
 	
 	@Test
-	public void testGetUsers_bySearch() {
+	 void testGetUsers_bySearch() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		when(tweetUiService.getUsers(anyString(),anyString())).thenReturn(responseEntity);
@@ -60,7 +60,7 @@ public class TweetUiServiceControllerTest {
 	}
 
 	@Test
-	public void testGetTweets() {
+	 void testGetTweets() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		when(tweetUiService.getTweets(anyString(), anyString())).thenReturn(responseEntity);
@@ -69,7 +69,7 @@ public class TweetUiServiceControllerTest {
 	}
 
 	@Test
-	public void testCreateNewTweet() {
+	 void testCreateNewTweet() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		Tweet tweet = new Tweet();
@@ -79,7 +79,7 @@ public class TweetUiServiceControllerTest {
 	}
 
 	@Test
-	public void testUpdateTweet() {
+	 void testUpdateTweet() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		when(tweetUiService.updateTweet("jwtToken", "sam", "tweetId", "new Tweet")).thenReturn(responseEntity);
@@ -88,7 +88,7 @@ public class TweetUiServiceControllerTest {
 	}
 
 	@Test
-	public void testLikeTweet() {
+	 void testLikeTweet() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		when(tweetUiService.likeTweet("jwtToken", "sam", "tweetId")).thenReturn(responseEntity);
@@ -97,7 +97,7 @@ public class TweetUiServiceControllerTest {
 	}
 
 	@Test
-	public void testRemoveLikeTweet() {
+	 void testRemoveLikeTweet() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		when(tweetUiService.removeLikeTweet("jwtToken", "sam", "tweetId")).thenReturn(responseEntity);
@@ -106,7 +106,7 @@ public class TweetUiServiceControllerTest {
 	}
 
 	@Test
-	public void testDeleteTweet() {
+	 void testDeleteTweet() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		when(tweetUiService.deleteTweet("jwtToken", "sam", "tweetId")).thenReturn(responseEntity);
@@ -115,7 +115,7 @@ public class TweetUiServiceControllerTest {
 	}
 
 	@Test
-	public void testReplyTweet() {
+	 void testReplyTweet() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		Comment comment = new Comment();
@@ -125,7 +125,7 @@ public class TweetUiServiceControllerTest {
 	}
 	
 	@Test
-	public void testsetTag() {
+	 void testsetTag() {
 		ApiResponse response = new ApiResponse();
 		ResponseEntity<ApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
 		Tag tag=new Tag();

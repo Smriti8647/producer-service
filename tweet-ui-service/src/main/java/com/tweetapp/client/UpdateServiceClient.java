@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.tweetapp.model.Comment;
+import com.tweetapp.model.Tag;
 import com.tweetapp.model.Tweet;
 import com.tweetapp.model.UserResponse;
 
@@ -52,6 +53,6 @@ public interface UpdateServiceClient {
 	public ResponseEntity<String> replyTweet(@RequestBody Comment comment,@PathVariable String id);
 	
 	@GetMapping("/{loginId}/tagged-tweets")
-	public ResponseEntity<?> taggedTweets(@PathVariable String loginId);
+	public ResponseEntity<Tag> taggedTweets(@PathVariable String loginId);
 	
 }

@@ -49,7 +49,7 @@ public class TweetUiServiceTest {
 	}
 
 	@Test
-	public void testGetAllTweet() throws Exception{
+	 void testGetAllTweet() throws Exception{
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		List<Tweet> tweetList = new ArrayList<>();
@@ -62,7 +62,7 @@ public class TweetUiServiceTest {
 	}
 	
 	@Test
-	public void testGetAllTweet_RuntimeException() {
+	 void testGetAllTweet_RuntimeException() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -74,7 +74,7 @@ public class TweetUiServiceTest {
 	}
 	
 	@Test
-	public void testGetAllTweet_FeigeException() {
+	 void testGetAllTweet_FeigeException() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -86,7 +86,7 @@ public class TweetUiServiceTest {
 	}
 	
 	@Test
-	public void testGetAllTweet_FeigeException_WhileValidating() {;
+	 void testGetAllTweet_FeigeException_WhileValidating() {;
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
 				.thenThrow(new SampleFeignClientException(-1,""));
 		ResponseEntity<ApiResponse> object = tweetService.getAllTweet(anyString());
@@ -95,7 +95,7 @@ public class TweetUiServiceTest {
 	}
 
 	@Test
-	public void testGetAllUsers() {
+	 void testGetAllUsers() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -108,7 +108,7 @@ public class TweetUiServiceTest {
 	}
 	
 	@Test
-	public void testGetAllUsers_RuntimeException() {
+	 void testGetAllUsers_RuntimeException() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -120,7 +120,7 @@ public class TweetUiServiceTest {
 	}
 	
 	@Test
-	public void testGetAllUsers_FeigeException() {
+	 void testGetAllUsers_FeigeException() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -132,7 +132,7 @@ public class TweetUiServiceTest {
 	}
 
 	@Test
-	public void testGetUser() {
+	 void testGetUser() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -156,20 +156,8 @@ public class TweetUiServiceTest {
 //		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,object.getStatusCode());
 //	}
 	
-//	@Test
-//	public void testGetUser_FeigeException() {
-//		ValidationResponse validationResponse = new ValidationResponse();
-//		validationResponse.setIsSuccess(true);
-//		when(authenticationServiceClient.validateAndReturnUser(anyString()))
-//				.thenReturn(new ResponseEntity<>(validationResponse, HttpStatus.OK));
-//		when(updateServiceClient.findUser(anyString())).thenThrow(new SampleFeignClientException(-1,""));
-//		ResponseEntity<ApiResponse> object = tweetService.getUsers(anyString(),anyString());
-//		assertEquals(false,object.getBody().getSuccess());
-//		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,object.getStatusCode());
-//	}
-
 	@Test
-	public void testGetTweets() {
+	 void testGetTweets() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -181,20 +169,8 @@ public class TweetUiServiceTest {
 		assertNotNull(object);
 	}
 	
-//	@Test
-//	public void testGetTweets_RuntimeException() {
-//		ValidationResponse validationResponse = new ValidationResponse();
-//		validationResponse.setIsSuccess(true);
-//		when(authenticationServiceClient.validateAndReturnUser(anyString()))
-//				.thenReturn(new ResponseEntity<>(validationResponse, HttpStatus.OK));
-//		when(updateServiceClient.tweets(anyString())).thenThrow(new RuntimeException());
-//		ResponseEntity<ApiResponse> object = tweetService.getTweets(anyString(), anyString());
-//		assertEquals(false,object.getBody().getSuccess());
-//		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,object.getStatusCode());
-//	}
-
 	@Test
-	public void testCreateNewTweet() {
+	 void testCreateNewTweet() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -207,7 +183,7 @@ public class TweetUiServiceTest {
 	}
 	
 	@Test
-	public void testCreateNewTweet_RuntimeException() {
+	 void testCreateNewTweet_RuntimeException() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -220,7 +196,7 @@ public class TweetUiServiceTest {
 	}
 	
 	@Test
-	public void testCreateNewTweet_FeigeException() {
+	 void testCreateNewTweet_FeigeException() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -233,7 +209,7 @@ public class TweetUiServiceTest {
 	}
 
 	@Test
-	public void testUpdatetweet() {
+	 void testUpdatetweet() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -245,7 +221,7 @@ public class TweetUiServiceTest {
 	}
 	
 	@Test
-	public void testUpdateTweet_RuntimeException() {
+	 void testUpdateTweet_RuntimeException() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -256,21 +232,9 @@ public class TweetUiServiceTest {
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,object.getStatusCode());
 	}
 	
-//	@Test
-//	public void testUpdateTweet_FeigeException() {
-//		ValidationResponse validationResponse = new ValidationResponse();
-//		validationResponse.setIsSuccess(true);
-//		when(authenticationServiceClient.validateAndReturnUser(anyString()))
-//				.thenReturn(new ResponseEntity<>(validationResponse, HttpStatus.OK));
-//		when(updateServiceClient.updateTweet(anyString(), anyString())).thenThrow(new SampleFeignClientException(-1,""));
-//		ResponseEntity<ApiResponse> object = tweetService.updateTweet(anyString(),anyString(),anyString(),anyString());
-//		assertEquals(false,object.getBody().getSuccess());
-//		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,object.getStatusCode());
-//	}
-
 
 	@Test
-	public void testDeleteTweet() {
+	 void testDeleteTweet() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -281,20 +245,8 @@ public class TweetUiServiceTest {
 		assertNotNull(object);
 	}
 	
-//	@Test
-//	public void testDeleteTweet_RuntimeException() {
-//		ValidationResponse validationResponse = new ValidationResponse();
-//		validationResponse.setIsSuccess(true);
-//		when(authenticationServiceClient.validateAndReturnUser(anyString()))
-//				.thenReturn(new ResponseEntity<>(validationResponse, HttpStatus.OK));
-//		when(updateServiceClient.deleteTweet(anyString(), anyString())).thenThrow(new RuntimeException());
-//		ResponseEntity<ApiResponse> object = tweetService.deleteTweet(anyString(), anyString(), anyString());
-//		assertEquals(false,object.getBody().getSuccess());
-//		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,object.getStatusCode());
-//	}
-
 	@Test
-	public void testLikeTweet() {
+	 void testLikeTweet() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -305,20 +257,8 @@ public class TweetUiServiceTest {
 		assertNotNull(object);
 	}
 	
-//	@Test
-//	public void testLikeTweet_RuntimeException() {
-//		ValidationResponse validationResponse = new ValidationResponse();
-//		validationResponse.setIsSuccess(true);
-//		when(authenticationServiceClient.validateAndReturnUser(anyString()))
-//				.thenReturn(new ResponseEntity<>(validationResponse, HttpStatus.OK));
-//		when(updateServiceClient.likeTweet(anyString(), anyString())).thenThrow(new RuntimeException());
-//		ResponseEntity<ApiResponse> object = tweetService.likeTweet(anyString(), anyString(), anyString());
-//		assertEquals(false,object.getBody().getSuccess());
-//		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,object.getStatusCode());
-//	}
-
 	@Test
-	public void testRemoveLikeTweet() {
+	 void testRemoveLikeTweet() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -330,7 +270,7 @@ public class TweetUiServiceTest {
 	}
 	
 	@Test
-	public void testRemoveLikeTweet_RuntimeException() {
+	 void testRemoveLikeTweet_RuntimeException() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -341,21 +281,8 @@ public class TweetUiServiceTest {
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,object.getStatusCode());
 	}
 	
-//	@Test
-//	public void testRemoveLike_FeigeException() {
-//		ValidationResponse validationResponse = new ValidationResponse();
-//		validationResponse.setIsSuccess(true);
-//		when(authenticationServiceClient.validateAndReturnUser(anyString()))
-//				.thenReturn(new ResponseEntity<>(validationResponse, HttpStatus.OK));
-//		when(updateServiceClient.dislikeTweet(anyString(), anyString())).thenThrow(new SampleFeignClientException(-1,""));
-//		ResponseEntity<ApiResponse> object = tweetService.removeLikeTweet(anyString(),anyString(),anyString());
-//		assertEquals(false,object.getBody().getSuccess());
-//		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,object.getStatusCode());
-//	}
-
-
 	@Test
-	public void testReplyTweet() {
+	 void testReplyTweet() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))
@@ -368,7 +295,7 @@ public class TweetUiServiceTest {
 	}
 	
 	@Test
-	public void testReplyTweet_RuntimeException() {
+	 void testReplyTweet_RuntimeException() {
 		ValidationResponse validationResponse = new ValidationResponse();
 		validationResponse.setIsSuccess(true);
 		when(authenticationServiceClient.validateAndReturnUser(anyString()))

@@ -2,8 +2,6 @@ package com.tweetapp.model;
 
 import org.springframework.http.HttpStatus;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class ValidationResponse {
 
 	private String userId;
