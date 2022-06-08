@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.tweetapp.model.Comment;
 import com.tweetapp.model.Tweet;
+import com.tweetapp.model.UserResponse;
 
 @FeignClient(value="tweet-update-service", url = "http://localhost:6200")
 public interface UpdateServiceClient {
@@ -24,16 +25,16 @@ public interface UpdateServiceClient {
 	public ResponseEntity<String> addTweet(@RequestBody Tweet tweet);
 	
 	@GetMapping("/all-users")
-	public ResponseEntity<?> allUsers();
+	public ResponseEntity<List<UserResponse>> allUsers();
 	
 	@GetMapping("/{loginId}/search-user")
-	public ResponseEntity<?> findUser(@PathVariable String loginId);
+	public ResponseEntity<List<UserResponse>> findUser(@PathVariable String loginId);
 	
 	@GetMapping("/tweets")
-	public ResponseEntity<?> tweets();
+	public ResponseEntity<List<Tweet>> tweets();
 	
 	@GetMapping("/{loginId}/tweets")
-	public ResponseEntity<?> tweets(@PathVariable String loginId);
+	public ResponseEntity<List<Tweet>> tweets(@PathVariable String loginId);
 	
 	@PutMapping("/update-tweet/{id}")
 	public ResponseEntity<String> updateTweet(@RequestBody String updatedTweet,@PathVariable String id);
