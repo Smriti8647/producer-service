@@ -141,7 +141,7 @@ public class TweetUiServiceTest {
 				.thenReturn(new ResponseEntity<>(validationResponse, HttpStatus.OK));
 		List<UserResponse> userList = new ArrayList<>();
 		ResponseEntity<List<UserResponse>> response = new ResponseEntity<>(userList, HttpStatus.OK);
-		when(updateServiceClient.findUser("sam")).thenReturn(response);
+		when(updateServiceClient.findUsers("sam")).thenReturn(response);
 		ResponseEntity<ApiResponse> object = tweetService.getUsers(anyString(), "sam");
 		assertNotNull(object);
 	}

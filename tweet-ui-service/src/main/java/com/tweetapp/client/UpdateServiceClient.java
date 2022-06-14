@@ -28,8 +28,11 @@ public interface UpdateServiceClient {
 	@GetMapping("/all-users")
 	public ResponseEntity<List<UserResponse>> allUsers();
 
-	@GetMapping("/{loginId}/search-user")
-	public ResponseEntity<List<UserResponse>> findUser(@PathVariable String loginId);
+	@GetMapping("/{loginId}/search-users")
+	public ResponseEntity<List<UserResponse>> findUsers(@PathVariable String loginId);
+	
+	@GetMapping("/{loginId}/user")
+	public ResponseEntity<?> findUser(@PathVariable String loginId);
 
 	@GetMapping("/tweets")
 	public ResponseEntity<List<Tweet>> tweets();

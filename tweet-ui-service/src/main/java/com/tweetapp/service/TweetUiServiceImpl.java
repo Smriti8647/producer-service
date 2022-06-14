@@ -87,7 +87,25 @@ public class TweetUiServiceImpl implements TweetUiService {
 				if (LOGGER.isDebugEnabled()) {
 					LOGGER.debug("{}, Information: Fetching Users ", this.getClass().getSimpleName());
 				}
-				ResponseEntity<List<UserResponse>> response = updateServiceClient.findUser(username);
+				ResponseEntity<List<UserResponse>> response = updateServiceClient.findUsers(username);
+				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
+			} else {
+				return createUnauthorizedResponse(validationResponse);
+			}
+		} catch (FeignException e) {
+			return createFeignExceptionResponse(e);
+		} catch (RuntimeException e) {
+			return createRuntimeExceptionResponse(e);
+		}
+	}
+	public ResponseEntity<ApiResponse> getUser(final String token, String username) {
+		try {
+			ValidationResponse validationResponse = jwtTokenValidation(token);
+			if (validationResponse != null && validationResponse.getIsSuccess()) {
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{}, Information: Fetching Users ", this.getClass().getSimpleName());
+				}
+				ResponseEntity<?> response = updateServiceClient.findUser(username);
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
 				return createUnauthorizedResponse(validationResponse);

@@ -15,6 +15,8 @@ public interface TweetUiService {
 	public ResponseEntity<ApiResponse> getUsers(final String token);
 
 	public ResponseEntity<ApiResponse> getUsers(final String token, String username);
+	
+	public ResponseEntity<ApiResponse> getUser(final String token, String username);
 
 	public ResponseEntity<ApiResponse> getTweets(final String token, String username);
 
