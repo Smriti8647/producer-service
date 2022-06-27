@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.tweetapp.model.AddTweetResponse;
 import com.tweetapp.model.Comment;
 import com.tweetapp.model.Tag;
+import com.tweetapp.model.TagResponse;
 import com.tweetapp.model.Tweet;
 import com.tweetapp.model.UserResponse;
 
@@ -23,7 +25,7 @@ import com.tweetapp.model.UserResponse;
 public interface UpdateServiceClient {
 
 	@PostMapping("/add-tweet")
-	public ResponseEntity<String> addTweet(@RequestBody Tweet tweet);
+	public ResponseEntity<AddTweetResponse> addTweet(@RequestBody Tweet tweet);
 
 	@GetMapping("/all-users")
 	public ResponseEntity<List<UserResponse>> allUsers();
@@ -56,6 +58,9 @@ public interface UpdateServiceClient {
 	public ResponseEntity<String> replyTweet(@RequestBody Comment comment, @PathVariable String id);
 
 	@GetMapping("/{loginId}/tagged-tweets")
-	public ResponseEntity<Tag> taggedTweets(@PathVariable String loginId);
+	public ResponseEntity<TagResponse> taggedTweets(@PathVariable String loginId);
+	
+	@PostMapping("get-tweets")
+	public ResponseEntity<List<Tweet>> getTweets(@RequestBody List<String> tweetIdList);
 
 }

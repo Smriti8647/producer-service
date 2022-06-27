@@ -1,5 +1,7 @@
 package com.tweetapp.service;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 
 import com.tweetapp.common.ApiResponse;
@@ -34,5 +36,9 @@ public interface TweetUiService {
 	public ResponseEntity<ApiResponse> replyTweet(final String token, String username, String id, Comment comment);
 
 	public ResponseEntity<ApiResponse> setTag(final String token, Tag tag);
+	
+	public ResponseEntity<ApiResponse> getTaggedTweets(final String token, String loginId);
+	
+	public ResponseEntity<ApiResponse> getTweetsByTweetId(String token, List<String> tweetIdList);
 
 }

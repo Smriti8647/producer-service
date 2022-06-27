@@ -1,5 +1,7 @@
 package com.tweetapp.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -160,5 +162,28 @@ public class TweetUiServiceController {
 		}
 		return tweetUiService.setTag(token, tag);
 	}
+	
+	@GetMapping("/{username}/tags")
+	public ResponseEntity<ApiResponse> getTaggedTweets(@RequestHeader("Authorization") final String token,
+			@PathVariable("username") String username) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}, Information: Calling Service to get tagged tweets for user {}",
+					this.getClass().getSimpleName(), username);
+		}
+		return tweetUiService.getTaggedTweets(token, username);
+	}
+	
+	@PostMapping("/get-tweets")
+	public ResponseEntity<ApiResponse> getTweetsByTweetIds(@RequestHeader("Authorization") final String token,
+			@Valid @RequestBody List<String> tweetIdList, final BindingResult result) {
+		if (result.hasErrors())
+			return new ResponseEntity<>(new ApiResponse("Validations not passed "), HttpStatus.BAD_REQUEST);
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}, Information: Calling Service to get tweets for tweetIds {}",
+					this.getClass().getSimpleName(), tweetIdList);
+		}
+		return tweetUiService.getTweetsByTweetId(token, tweetIdList);
+	}
+	
 
 }

@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 import com.tweetapp.client.AuthenticationServiceClient;
 import com.tweetapp.client.UpdateServiceClient;
 import com.tweetapp.common.ApiResponse;
+import com.tweetapp.model.AddTweetResponse;
 import com.tweetapp.model.Comment;
 import com.tweetapp.model.Tag;
+import com.tweetapp.model.TagResponse;
 import com.tweetapp.model.Tweet;
 import com.tweetapp.model.UpdateTweet;
 import com.tweetapp.model.UserResponse;
@@ -145,7 +147,7 @@ public class TweetUiServiceImpl implements TweetUiService {
 				if (LOGGER.isDebugEnabled()) {
 					LOGGER.debug("{}, Information: Creating Tweet ", this.getClass().getSimpleName());
 				}
-				ResponseEntity<String> response = updateServiceClient.addTweet(tweet);
+				ResponseEntity<AddTweetResponse> response = updateServiceClient.addTweet(tweet);
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
 				return createUnauthorizedResponse(validationResponse);
@@ -323,6 +325,46 @@ public class TweetUiServiceImpl implements TweetUiService {
 			} else {
 				return createUnauthorizedResponse(validationResponse);
 			}
+		} catch (RuntimeException e) {
+			return createRuntimeExceptionResponse(e);
+		}
+	}
+
+	@Override
+	public ResponseEntity<ApiResponse> getTaggedTweets(String token, String loginId) {
+		try {
+			ValidationResponse validationResponse = jwtTokenValidation(token);
+			if (validationResponse != null && validationResponse.getIsSuccess()) {
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{}, Information: removing Like from the Tweet ", this.getClass().getSimpleName());
+				}
+				ResponseEntity<TagResponse> response = updateServiceClient.taggedTweets(loginId);
+				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
+			} else {
+				return createUnauthorizedResponse(validationResponse);
+			}
+		} catch (FeignException e) {
+			return createFeignExceptionResponse(e);
+		} catch (RuntimeException e) {
+			return createRuntimeExceptionResponse(e);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<ApiResponse> getTweetsByTweetId(String token, List<String> tweetIdList) {
+		try {
+			ValidationResponse validationResponse = jwtTokenValidation(token);
+			if (validationResponse != null && validationResponse.getIsSuccess()) {
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("{}, Information: calling update service ", this.getClass().getSimpleName());
+				}
+				ResponseEntity<List<Tweet>> response = updateServiceClient.getTweets(tweetIdList);
+				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
+			} else {
+				return createUnauthorizedResponse(validationResponse);
+			}
+		} catch (FeignException e) {
+			return createFeignExceptionResponse(e);
 		} catch (RuntimeException e) {
 			return createRuntimeExceptionResponse(e);
 		}
