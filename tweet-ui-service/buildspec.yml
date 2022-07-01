@@ -13,7 +13,7 @@ phases:
     commands:
       - echo "Entered build phase"
       - echo "Building Java"
-      - cd rest-service
+      - cd tweet-ui-service
       - mvn compile
       - mvn package
       - echo " building docker image"
