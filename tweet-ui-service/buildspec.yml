@@ -1,0 +1,31 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+      docker: 19
+  pre_build:
+    commands:
+      - echo "Entered the pre-build phase"
+      - $(aws ecr get-login --no-include-email --region ap-south-1)
+    
+  build:
+    commands:
+      - echo "Entered build phase"
+      - echo "Building Java"
+      - cd tweet-ui-service
+      - mvn compile
+      - mvn package
+      - echo " building docker image"
+      - docker build -t tweet-spring-ui-service . 
+      - docker tag tweet-spring-ui-service:latest 527121674197.dkr.ecr.ap-south-1.amazonaws.com/tweet-spring-ui-service:latest
+  post_build:
+    commands:
+      - echo "Entered the post-build phase"
+      - echo "Pushing Docker Image"
+      - docker push 527121674197.dkr.ecr.ap-south-1.amazonaws.com/tweet-spring-ui-service:latest
+      - echo writing deifinition file
+      - printf '[{"name":"tweetapp-container","imageUri":"%s"}]'527121674197.dkr.ecr.ap-south-1.amazonaws.com/tweet-spring-ui-service:latest>taskdefination.json
+artifacts:
+  files:
+    - tweet-ui-service/taskdefinition.json
