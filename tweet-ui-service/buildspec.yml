@@ -18,14 +18,14 @@ phases:
       - mvn package
       - echo " building docker image"
       - docker build -t tweet-spring-ui-service . 
-      - docker tag tweet-spring-ui-service:latest public.ecr.aws/u8b3v1e7/tweet-spring-ui-service:latest
+      - docker tag tweet-spring-ui-service:latest 527121674197.dkr.ecr.ap-south-1.amazonaws.com/tweet-spring-ui-service:latest
   post_build:
     commands:
       - echo "Entered the post-build phase"
       - echo "Pushing Docker Image"
-      - docker push public.ecr.aws/u8b3v1e7/tweet-spring-ui-service:latest
+      - docker push 527121674197.dkr.ecr.ap-south-1.amazonaws.com/tweet-spring-ui-service:latest
       - echo writing deifinition file
-      - printf '[{"name":"tweetapp-container","imageUri":"%s"}]'public.ecr.aws/u8b3v1e7/tweet-spring-ui-service:latest>taskdefination.json
+      - printf '[{"name":"tweetapp-container","imageUri":"%s"}]'527121674197.dkr.ecr.ap-south-1.amazonaws.com/tweet-spring-ui-service:latest>taskdefination.json
 artifacts:
   files:
     - tweet-ui-service/taskdefinition.json
