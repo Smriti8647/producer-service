@@ -3,7 +3,7 @@ phases:
   install:
     runtime-versions:
       java: corretto11
-      docker: 18
+      docker: 19
   pre_build:
     commands:
       - echo "Entered the pre-build phase"
