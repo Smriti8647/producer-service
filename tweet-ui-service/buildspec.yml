@@ -17,15 +17,15 @@ phases:
       - mvn compile
       - mvn package
       - echo " building docker image"
-      - docker build -t tweet-spring-ui-service . 
-      - docker tag tweet-spring-ui-service:latest 527121674197.dkr.ecr.ap-south-1.amazonaws.com/tweet-spring-ui-service:latest
+      - docker build -t tweet-ui-service-ecr .
+      - docker tag tweet-ui-service-ecr:latest 527121674197.dkr.ecr.ap-south-1.amazonaws.com/tweet-ui-service-ecr:latest
   post_build:
     commands:
       - echo "Entered the post-build phase"
       - echo "Pushing Docker Image"
-      - docker push 527121674197.dkr.ecr.ap-south-1.amazonaws.com/tweet-spring-ui-service:latest
+      - docker push 527121674197.dkr.ecr.ap-south-1.amazonaws.com/tweet-ui-service-ecr:latest
       - echo writing deifinition file
-      - printf '[{"name":"tweetapp-container","imageUri":"%s"}]'527121674197.dkr.ecr.ap-south-1.amazonaws.com/tweet-spring-ui-service:latest>taskdefination.json
+      - printf '[{"name":"tweetapp-container","imageUri":"%s"}]'527121674197.dkr.ecr.ap-south-1.amazonaws.com/tweet-ui-service-ecr:latest>taskdefination.json
 artifacts:
   files:
     - tweet-ui-service/taskdefinition.json
