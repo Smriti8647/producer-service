@@ -247,7 +247,9 @@ public class TweetUiServiceImpl implements TweetUiService {
 				if (LOGGER.isDebugEnabled()) {
 					LOGGER.debug("{}, Information: Adding comment to the Tweet ", this.getClass().getSimpleName());
 				}
-				comment.setTime(LocalDateTime.now());
+				ZonedDateTime zdtAtET = ZonedDateTime.now(ZoneId.of("Asia/Kolkata"));
+				LocalDateTime ldt = zdtAtET.toLocalDateTime();
+				comment.setTime(ldt);
 				ResponseEntity<String> response = updateServiceClient.replyTweet(comment, id);
 				return new ResponseEntity<>(new ApiResponse(true, response.getBody()), response.getStatusCode());
 			} else {
