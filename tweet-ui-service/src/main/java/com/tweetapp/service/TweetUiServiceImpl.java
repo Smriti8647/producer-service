@@ -1,6 +1,8 @@
 package com.tweetapp.service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -143,7 +145,9 @@ public class TweetUiServiceImpl implements TweetUiService {
 			ValidationResponse validationResponse = jwtTokenValidation(token);
 			if (validationResponse != null && validationResponse.getIsSuccess()) {
 				tweet.setLoginId(validationResponse.getUserId());
-				tweet.setTime(LocalDateTime.now());
+				ZonedDateTime zdtAtET = ZonedDateTime.now(ZoneId.of("Asia/Kolkata"));
+				LocalDateTime ldt = zdtAtET.toLocalDateTime();
+				tweet.setTime(ldt);
 				if (LOGGER.isDebugEnabled()) {
 					LOGGER.debug("{}, Information: Creating Tweet ", this.getClass().getSimpleName());
 				}
