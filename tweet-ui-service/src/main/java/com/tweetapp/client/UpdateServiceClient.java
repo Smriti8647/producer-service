@@ -21,7 +21,7 @@ import com.tweetapp.model.TagResponse;
 import com.tweetapp.model.Tweet;
 import com.tweetapp.model.UserResponse;
 
-@FeignClient(value = "tweet-update-service", url = "http://localhost:6200")
+@FeignClient(value = "tweet-update-service", url = "http://15.207.99.206:6200")
 public interface UpdateServiceClient {
 
 	@PostMapping("/add-tweet")

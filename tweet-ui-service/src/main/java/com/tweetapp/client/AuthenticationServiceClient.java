@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.tweetapp.model.ValidationResponse;
 
-@FeignClient(value = "tweet-authentication-service", url = "http://localhost:8082")
+@FeignClient(value = "tweet-authentication-service", url = "http://52.66.199.140:8082")
 public interface AuthenticationServiceClient {
 
 	@PostMapping("/api/v1.0/tweets/validate")
