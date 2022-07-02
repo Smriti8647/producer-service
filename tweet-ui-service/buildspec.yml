@@ -25,7 +25,7 @@ phases:
       - echo "Pushing Docker Image"
       - docker push 527121674197.dkr.ecr.ap-south-1.amazonaws.com/tweet-ui-service-ecr:latest
       - echo writing definition file
-      - printf '[{"name":"tweetapp-container","imageUri":"%s"}]' 527121674197.dkr.ecr.ap-south-1.amazonaws.com/tweet-ui-service-ecr:latest>taskdefinition.json
-#artifacts:
-#  files:
-#    - taskdefinition.json
+      - printf '[{"name":"tweetapp-container","imageUri":"%s"}]' 527121674197.dkr.ecr.ap-south-1.amazonaws.com/tweet-ui-service-ecr:latest>imagedefinitions.json
+artifacts:
+  files:
+    - tweet-ui-service/imagedefinitions.json
